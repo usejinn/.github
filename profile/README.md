@@ -1,8 +1,9 @@
-Jinn runs agent work as a call. You send a prompt and a folder. An agent works on it in its own Linux machine. You get back the files you asked for.
+Jinn runs an AI agent on a task in a new Linux VM. You send a prompt and an input folder; Jinn returns the files the task must produce.
 
-- [usejinn.com](https://usejinn.com): what Jinn is.
-- [docs.usejinn.com](https://docs.usejinn.com): functions, runs, the API, the CLI and examples. Every page is also Markdown, and [llms.txt](https://docs.usejinn.com/llms.txt) lists them for agents.
-- [jinn-go](https://github.com/usejinn/jinn-go): the CLI and the Go SDK.
-- [jinn-node](https://github.com/usejinn/jinn-node): the TypeScript SDK.
+| Repository | What it is |
+|---|---|
+| [jinn-cli](https://github.com/usejinn/jinn-cli) | The `jinn` command: `go install usejinn.com/jinn@latest` |
+| [jinn-go](https://github.com/usejinn/jinn-go) | The Go SDK: `go get usejinn.com/go` |
+| [jinn-node](https://github.com/usejinn/jinn-node) | The TypeScript SDK, `@usejinn/sdk` |
 
-Jinn is invitation-only for now. Write to [support@usejinn.com](mailto:support@usejinn.com).
+Docs: [docs.usejinn.com](https://docs.usejinn.com) ([llms.txt](https://docs.usejinn.com/llms.txt)). Jinn is invitation-only for now: [support@usejinn.com](mailto:support@usejinn.com).
