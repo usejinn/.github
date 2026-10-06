@@ -2,7 +2,7 @@ Jinn runs an AI agent on a task in a new Linux VM. You send a prompt and an inpu
 
 | Repository | What it is |
 |---|---|
-| [jinn-cli](https://github.com/usejinn/jinn-cli) | The `jinn` command: `go install usejinn.com/jinn@latest` |
+| [jinn-cli](https://github.com/usejinn/jinn-cli) | The `jinn` command: `curl -fsSL https://github.com/usejinn/jinn-cli/releases/latest/download/install.sh \| sh` |
 | [jinn-go](https://github.com/usejinn/jinn-go) | The Go SDK: `go get usejinn.com/go` |
 | [jinn-node](https://github.com/usejinn/jinn-node) | The TypeScript SDK, `@usejinn/sdk` |
 
