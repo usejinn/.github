@@ -1,20 +1,29 @@
 #!/usr/bin/env bash
 # Publishes the public parts of this repository to the usejinn GitHub
 # organisation, each folder as its own repository's history:
-#   sdk/go → usejinn/jinn-go, sdk/ts → usejinn/jinn-node, github/ → usejinn/.github
-# Pass a version (v0.1.0) to tag jinn-go and jinn-node too. Needs gh, signed in.
+#   sdk/go → jinn-go, sdk/ts → jinn-node, cli → jinn-cli, github → .github
+#
+#   github/publish.sh                    every repository's main branch
+#   github/publish.sh jinn-go v0.2.0     one repository, and tag it
+#
+# Release the SDK before a CLI that needs it: cli/go.mod names a published
+# usejinn.com/go version. Needs gh, signed in.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-version="${1:-}"
+declare -A folder=([jinn-go]=sdk/go [jinn-node]=sdk/ts [jinn-cli]=cli [.github]=github)
 auth="$(gh auth token)"
-publish() { # folder repository
+publish() { # repository [version]
   local commit
-  commit=$(git subtree split --prefix="$1" HEAD)
-  git push "https://x-access-token:$auth@github.com/usejinn/$2.git" "$commit:refs/heads/main"
-  if [ -n "$version" ] && [ "$2" != .github ]; then
-    git push "https://x-access-token:$auth@github.com/usejinn/$2.git" "$commit:refs/tags/$version"
+  commit=$(git subtree split --prefix="${folder[$1]}" HEAD 2>/dev/null)
+  git push -q "https://x-access-token:$auth@github.com/usejinn/$1.git" "$commit:refs/heads/main"
+  if [ -n "${2:-}" ]; then
+    git push -q "https://x-access-token:$auth@github.com/usejinn/$1.git" "$commit:refs/tags/$2"
   fi
+  echo "usejinn/$1 ← ${folder[$1]} ${2:-}"
 }
-publish sdk/go jinn-go
-publish sdk/ts jinn-node
-publish github .github
+if [ $# -gt 0 ]; then
+  [ -n "${folder[$1]:-}" ] || { echo "no repository $1" >&2; exit 1; }
+  publish "$1" "${2:-}"
+else
+  for repo in "${!folder[@]}"; do publish "$repo"; done
+fi
